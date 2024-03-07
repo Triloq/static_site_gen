@@ -1,6 +1,7 @@
 import unittest
 
 from htmlnode import *
+from textnode import *
 
 
 class TestHTMLNode(unittest.TestCase):
@@ -61,6 +62,25 @@ class TestHTMLNode(unittest.TestCase):
             'Do not click here, though.</a></p></p>'
             
         )
+
+        to_leaf1 = TextNode(text='Testing text type', text_type='text')
+        to_leaf1 = TextNode.text_node_to_html_node(to_leaf1)
+        to_leaf2 = TextNode(text='Testing bold type', text_type='bold')
+        to_leaf2 = TextNode.text_node_to_html_node(to_leaf2)
+        to_leaf3 = TextNode(text='Testing italic type', text_type='italic')
+        to_leaf3 = TextNode.text_node_to_html_node(to_leaf3)
+        to_leaf4 = TextNode(text='Testing code type', text_type='code')
+        to_leaf4 = TextNode.text_node_to_html_node(to_leaf4)
+        to_leaf5 = TextNode(text='Testing link type', text_type='link', url='www.testing.com')
+        to_leaf5 = TextNode.text_node_to_html_node(to_leaf5)
+        to_leaf6 = TextNode(text='Testing image type', text_type='image', url='www.testing.com')
+        to_leaf6 = TextNode.text_node_to_html_node(to_leaf6)
+        self.assertEqual(to_leaf1.to_html(), 'Testing text type')
+        self.assertEqual(to_leaf2.to_html(), '<b>Testing bold type</b>')
+        self.assertEqual(to_leaf3.to_html(), '<i>Testing italic type</i>')
+        self.assertEqual(to_leaf4.to_html(), '<code>Testing code type</code>')
+        self.assertEqual(to_leaf5.to_html(), '<a href="www.testing.com">Testing link type</a>')
+        self.assertEqual(to_leaf6.to_html(), '<img src="www.testing.com">Testing image type</img>')
 
 if __name__ == '__main__':
     unittest.main()

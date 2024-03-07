@@ -7,7 +7,7 @@ class HTMLNode:
                                   # children of this node
         self.props = props        # dict of key-value pairs representing 
                                   # attributes of HTML tag
-        
+
     def to_html(self):
         raise NotImplementedError
 
@@ -34,6 +34,8 @@ class LeafNode(HTMLNode):
         if self.props is None:
             return f'<{self.tag}>{self.value}</{self.tag}>'
         for k, v in self.props.items():
+            if self.tag == 'img':
+                return f'<{self.tag} {k}="{v}">{self.props['alt']}</{self.tag}>'
             return f'<{self.tag} {k}="{v}">{self.value}</{self.tag}>'
 
 
