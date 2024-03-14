@@ -2,6 +2,7 @@
 import unittest
 
 from textnode import TextNode
+from htmlnode import *
 
 
 class TestTextNode(unittest.TestCase):
@@ -18,6 +19,21 @@ class TestTextNode(unittest.TestCase):
         node7 = TextNode("This is a text node", "bold")
         node8 = TextNode("This is a text node", "italics")
         self.assertNotEqual(node7, node8)
+
+        thing = TextNode(text='Well `shoot`, dangit', text_type='link')
+        thing2 = TextNode(text='`Shoot` ````*well*, thanks', text_type='link')
+        thing3 = LeafNode()
+        hold = TextNode.split_nodes_delimiter([thing, thing2, thing3], '`', "code")
+        self.assertEqual(len(hold), 7)
+
+        thing4 = TextNode(text='', text_type='text')
+        hold2 = TextNode.split_nodes_delimiter([thing4],'**', 'bold')
+        self.assertEqual(hold2, [])
+
+        thing5 = TextNode(text=' the way **forward** is back', text_type='bold')
+        thing6 = TextNode(text='No, the *other* way', text_type='italic')
+        hold3 = TextNode.split_nodes_delimiter([thing5, thing6], '**', 'bold')
+        hold4 = TextNode.split_nodes_delimiter([thing5, thing6], '*', text_type='italic')
 
 
 if __name__ == "__main__":
